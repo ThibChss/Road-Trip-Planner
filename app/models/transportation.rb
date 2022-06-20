@@ -1,14 +1,7 @@
 class Transportation < ApplicationRecord
   belongs_to :trip
-  validates :name, :type, :start_date, :end_date, :start_place, :end_place, :price, presence: true
-  validate :end_date_after_start_date?
-
-  private
-
-  def end_date_after_start_date?
-    # Confirm that the end date cannot be before the start date
-    if :end_date < :start_date
-      errors.add :end_date, "Must be after the starting date"
-    end
-  end
+  validates :name, :transportation_type, :start_date, :end_date, :start_address, :end_address, :price, presence: true
 end
+
+# Test
+# transportation = Transportation.create(name: 'Audi A6', transportation_type: 'car rental', start_date: Date.today, end_date: (Date.today + 1), price: 80, start_address: 'Orléans', end_address: 'Paris', trip: trip)

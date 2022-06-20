@@ -10,13 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_06_17_151635) do
+ActiveRecord::Schema[7.0].define(version: 2022_06_20_174952) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "accomodations", force: :cascade do |t|
     t.string "place_name"
-    t.string "type"
+    t.string "accomodation_type"
     t.datetime "start_book"
     t.datetime "end_book"
     t.integer "price"
@@ -31,7 +31,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_17_151635) do
 
   create_table "activities", force: :cascade do |t|
     t.string "place_name"
-    t.string "type"
+    t.string "activity_type"
     t.datetime "date"
     t.time "duration"
     t.integer "price"
@@ -46,7 +46,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_17_151635) do
 
   create_table "transportations", force: :cascade do |t|
     t.string "name"
-    t.string "type"
+    t.string "transportation_type"
     t.datetime "start_date"
     t.datetime "end_date"
     t.string "start_address"
