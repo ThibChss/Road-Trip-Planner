@@ -1,6 +1,6 @@
 class Accomodation < ApplicationRecord
   belongs_to :trip
-  validates :place_name, :accomodation_type, :start_book, :end_book, :price, :address, presence: true
+  validates :place_name, :accomodation_type, :start_date, :end_date, :price, :address, presence: true
 end
 
 # Test
