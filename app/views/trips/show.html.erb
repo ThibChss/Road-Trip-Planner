@@ -5,42 +5,32 @@
   <h1><%= @trip.name %></h1>
   <h3>From <%= @trip.start_date %> to <%= @trip.end_date %></h3>
 
-  <% @trip.transportations.each do |tr| %>
+  <% @trip.activities.each do |acc| %>
     <ul>
-      <li><%= tr.name %></li>
+      <li><%= acc.place_name %></li>
     </ul>
   <% end %>
 
-  <%# Button Modal %>
-  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-    Add a transportation
-  </button>
+  <%= render 'transportations/create_transportation', trip: @trip, transportation: @transportation %>
+  <%= render 'accomodations/create_accomodation', trip: @trip, accomodation: @accomodation %>
+  <%= render 'activities/create_activity', trip: @trip, activity: @activity %>
+</div>
+<br>
+<div class="container">
 
-  <%# Corps Modal => Create %>
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Add your vehicule here</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-
-        <%= simple_form_for [@trip, @transportation] do |f| %>
-          <div class="modal-body">
-            <%= f.input :name %>
-            <%= f.input :transportation_type %>
-            <%= f.date_field :start_date %>
-            <%= f.date_field :end_date %>
-            <%= f.input :start_address %>
-            <%= f.input :end_address %>
-            <%= f.input :price %>
-          </div>
-          <div class="modal-footer">
-            <%= f.submit 'Add', class: 'btn btn-primary' %>
-          </div>
-        <% end %>
-      </div>
+<%= month_calendar(events: @transportation_date + @accomodation_date + @activity_date, attribute: :start_date, end_attribute: :end_date) do |date, events| %>
+  <%= date %>
+  <% events.each do |event| %>
+    <div>
+      <% if event.is_a? Transportation %>
+        <%= event.name %>
+      <% elsif event.is_a? Accomodation %>
+        <%= event.place_name %>
+      <% elsif event.is_a? Activity %>
+        <%= event.place_name %>
+      <% end %>
     </div>
-  </div>
+  <% end %>
+<% end %>
 
 </div>
