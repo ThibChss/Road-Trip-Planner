@@ -1,0 +1,46 @@
+<div class="container">
+
+  <%= link_to 'Back to profile', profile_path(current_user), class: 'btn btn-primary' %>
+
+  <h1><%= @trip.name %></h1>
+  <h3>From <%= @trip.start_date %> to <%= @trip.end_date %></h3>
+
+  <% @trip.transportations.each do |tr| %>
+    <ul>
+      <li><%= tr.name %></li>
+    </ul>
+  <% end %>
+
+  <%# Button Modal %>
+  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    Add a transportation
+  </button>
+
+  <%# Corps Modal => Create %>
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Add your vehicule here</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <%= simple_form_for [@trip, @transportation] do |f| %>
+          <div class="modal-body">
+            <%= f.input :name %>
+            <%= f.input :transportation_type %>
+            <%= f.date_field :start_date %>
+            <%= f.date_field :end_date %>
+            <%= f.input :start_address %>
+            <%= f.input :end_address %>
+            <%= f.input :price %>
+          </div>
+          <div class="modal-footer">
+            <%= f.submit 'Add', class: 'btn btn-primary' %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+</div>
