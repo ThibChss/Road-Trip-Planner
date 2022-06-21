@@ -15,22 +15,22 @@
   <%= render 'accomodations/create_accomodation', trip: @trip, accomodation: @accomodation %>
   <%= render 'activities/create_activity', trip: @trip, activity: @activity %>
 </div>
+
 <br>
+
 <div class="container">
-
-<%= month_calendar(events: @transportation_date + @accomodation_date + @activity_date, attribute: :start_date, end_attribute: :end_date) do |date, events| %>
-  <%= date %>
-  <% events.each do |event| %>
-    <div>
-      <% if event.is_a? Transportation %>
-        <%= event.name %>
-      <% elsif event.is_a? Accomodation %>
-        <%= event.place_name %>
-      <% elsif event.is_a? Activity %>
-        <%= event.place_name %>
-      <% end %>
-    </div>
+  <%= month_calendar(events: @transportation_date + @accomodation_date + @activity_date, attribute: :start_date, end_attribute: :end_date) do |date, events| %>
+    <%= date %>
+    <% events.each do |event| %>
+      <div>
+        <% if event.is_a? Transportation %>
+          <%= event.name %>
+        <% elsif event.is_a? Accomodation %>
+          <%= event.place_name %>
+        <% elsif event.is_a? Activity %>
+          <%= event.place_name %>
+        <% end %>
+      </div>
+    <% end %>
   <% end %>
-<% end %>
-
 </div>
