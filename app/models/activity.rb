@@ -1,6 +1,6 @@
 class Activity < ApplicationRecord
   belongs_to :trip
-  validates :place_name, :activity_type, :start_date, :end_date, :price, :address, presence: true
+  validates :name, :activity_type, :start_date, :end_date, :price, :address, presence: true
 end
 
 # Test

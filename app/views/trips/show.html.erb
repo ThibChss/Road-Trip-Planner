@@ -7,7 +7,7 @@
 
   <% @trip.activities.each do |acc| %>
     <ul>
-      <li><%= acc.place_name %></li>
+      <li><%= acc.name %></li>
     </ul>
   <% end %>
 
@@ -24,13 +24,67 @@
     <% events.each do |event| %>
       <div>
         <% if event.is_a? Transportation %>
-          <%= event.name %>
+          <%# Button Modal %>
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Modal<%=event.id%>Activity">
+            <%= event.name %>
+          </button>
+
+          <%# Corps Modal => Test %>
+          <div class="modal fade" id="Modal<%=event.id%>Activity" tabindex="-1" aria-labelledby="Modal<%=event.id%>ActivityLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="Modal<%=event.id%>ActivityLabel"><%= event.name %></h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  <div class="modal-body">
+                    content
+                  </div>
+              </div>
+            </div>
+          </div>
         <% elsif event.is_a? Accomodation %>
-          <%= event.place_name %>
+          <%# Button Modal %>
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Modal<%= event.class %><%= event.id %>">
+            <%= event.name %>
+          </button>
+
+          <%# Corps Modal => Calendar Accomodation %>
+          <div class="modal fade" id="Modal<%= event.class %><%= event.id %>" tabindex="-1" aria-labelledby="Modal<%= event.class %><%= event.id %>Label" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="Modal<%= event.class %><%= event.id %>Label"><%= event.name %></h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  <div class="modal-body">
+                    content
+                  </div>
+              </div>
+            </div>
+          </div>
         <% elsif event.is_a? Activity %>
-          <%= event.place_name %>
+          <%# Button Modal %>
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Modal<%=event.id%>Activity">
+            <%= event.name %>
+          </button>
+
+          <%# Corps Modal => Test %>
+          <div class="modal fade" id="Modal<%=event.id%>Activity" tabindex="-1" aria-labelledby="Modal<%=event.id%>ActivityLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="Modal<%=event.id%>ActivityLabel"><%= event.name %></h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  <div class="modal-body">
+                    content
+                  </div>
+              </div>
+            </div>
+          </div>
         <% end %>
       </div>
+
+
     <% end %>
   <% end %>
 </div>
+<br>

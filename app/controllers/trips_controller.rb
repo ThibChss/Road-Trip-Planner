@@ -30,16 +30,20 @@ class TripsController < ApplicationController
 
   def transportation_setup
     @transportation = Transportation.new
-    @transportation_date = Transportation.where(start_date: @start_date.beginning_of_month.beginning_of_week..@start_date.end_of_month.end_of_week)
+    @transportation_date = find_start_date(Transportation)
   end
 
   def accomodation_setup
     @accomodation = Accomodation.new
-    @accomodation_date = Accomodation.where(start_date: @start_date.beginning_of_month.beginning_of_week..@start_date.end_of_month.end_of_week)
+    @accomodation_date = find_start_date(Accomodation)
   end
 
   def activity_setup
     @activity = Activity.new
-    @activity_date = Activity.where(start_date: @start_date.beginning_of_month.beginning_of_week..@start_date.end_of_month.end_of_week)
+    @activity_date = find_start_date(Activity)
+  end
+
+  def find_start_date(model_class)
+    model_class.where(start_date: @start_date.beginning_of_month.beginning_of_week..@start_date.end_of_month.end_of_week)
   end
 end
