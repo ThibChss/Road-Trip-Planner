@@ -1,90 +1,44 @@
 <div class="container">
-
   <%= link_to 'Back to profile', profile_path(current_user), class: 'btn btn-primary' %>
 
   <h1><%= @trip.name %></h1>
-  <h3>From <%= @trip.start_date %> to <%= @trip.end_date %></h3>
+  <h3>From <%= @trip.start_date.strftime("%B %-d, %Y") %> to <%= @trip.end_date.strftime("%B %-d, %Y") %></h3>
 
-  <% @trip.activities.each do |acc| %>
-    <ul>
-      <li><%= acc.name %></li>
-    </ul>
-  <% end %>
-
-  <%= render 'transportations/create_transportation', trip: @trip, transportation: @transportation %>
-  <%= render 'accomodations/create_accomodation', trip: @trip, accomodation: @accomodation %>
-  <%= render 'activities/create_activity', trip: @trip, activity: @activity %>
 </div>
 
 <br>
 
 <div class="container">
-  <%= month_calendar(events: @transportation_date + @accomodation_date + @activity_date, attribute: :start_date, end_attribute: :end_date) do |date, events| %>
-    <%= date %>
-    <% events.each do |event| %>
-      <div>
-        <% if event.is_a? Transportation %>
-          <%# Button Modal %>
-          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Modal<%=event.id%>Activity">
-            <%= event.name %>
-          </button>
+  <ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item" role="calendar">
+      <button class="nav-link active" id="calendar-tab" data-bs-toggle="tab" data-bs-target="#calendar" type="button" role="tab" aria-controls="calendar" aria-selected="true">Calendar</button>
+    </li>
+    <li class="nav-item" role="map">
+      <button class="nav-link" id="map-tab" data-bs-toggle="tab" data-bs-target="#map" type="button" role="tab" aria-controls="map" aria-selected="false">Map</button>
+    </li>
+  </ul>
 
-          <%# Corps Modal => Test %>
-          <div class="modal fade" id="Modal<%=event.id%>Activity" tabindex="-1" aria-labelledby="Modal<%=event.id%>ActivityLabel" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="Modal<%=event.id%>ActivityLabel"><%= event.name %></h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                  <div class="modal-body">
-                    content
-                  </div>
-              </div>
-            </div>
-          </div>
-        <% elsif event.is_a? Accomodation %>
-          <%# Button Modal %>
-          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Modal<%= event.class %><%= event.id %>">
-            <%= event.name %>
-          </button>
-
-          <%# Corps Modal => Calendar Accomodation %>
-          <div class="modal fade" id="Modal<%= event.class %><%= event.id %>" tabindex="-1" aria-labelledby="Modal<%= event.class %><%= event.id %>Label" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="Modal<%= event.class %><%= event.id %>Label"><%= event.name %></h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                  <div class="modal-body">
-                    content
-                  </div>
-              </div>
-            </div>
-          </div>
-        <% elsif event.is_a? Activity %>
-          <%# Button Modal %>
-          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Modal<%=event.id%>Activity">
-            <%= event.name %>
-          </button>
-
-          <%# Corps Modal => Test %>
-          <div class="modal fade" id="Modal<%=event.id%>Activity" tabindex="-1" aria-labelledby="Modal<%=event.id%>ActivityLabel" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="Modal<%=event.id%>ActivityLabel"><%= event.name %></h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                  <div class="modal-body">
-                    content
-                  </div>
-              </div>
-            </div>
+  <div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active" id="calendar" role="tabpanel" aria-labelledby="calendar-tab">
+      <br>
+      <%= render 'transportations/create_transportation', trip: @trip, transportation: @transportation %>
+      <%= render 'accomodations/create_accomodation', trip: @trip, accomodation: @accomodation %>
+      <%= render 'activities/create_activity', trip: @trip, activity: @activity %>
+      <br>
+      <br>
+      <%= month_calendar(events: @transportation_date + @accomodation_date + @activity_date, attribute: :start_date, end_attribute: :end_date) do |date, events| %>
+        <%= date %>
+        <% events.each do |event| %>
+          <div>
+            <%= render 'shared/modal_calendar', class_model: Transportation, event: event %>
+            <%= render 'shared/modal_calendar', class_model: Accomodation, event: event %>
+            <%= render 'shared/modal_calendar', class_model: Activity, event: event %>
           </div>
         <% end %>
-      </div>
-
-
-    <% end %>
-  <% end %>
+      <% end %>
+    </div>
+    <div class="tab-pane fade" id="map" role="tabpanel" aria-labelledby="map-tab">...</div>
+  </div>
 </div>
+
 <br>
