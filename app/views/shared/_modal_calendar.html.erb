@@ -1,0 +1,20 @@
+<% if event.is_a? class_model %>
+  <%# Button Modal %>
+  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Modal<%=event.id%><%= class_model %>">
+    <%= event.name %>
+  </button>
+
+  <%# Corps Modal => Test %>
+  <div class="modal fade" id="Modal<%= event.id %><%= class_model %>" tabindex="-1" aria-labelledby="Modal<%= event.id %><%= class_model %>Label" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="Modal<%= event.id %><%= class_model %>Label"><%= event.name %></h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          content
+        </div>
+    </div>
+  </div>
+<% end %>

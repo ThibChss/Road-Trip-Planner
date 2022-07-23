@@ -1,36 +1,44 @@
 <div class="container">
-
   <%= link_to 'Back to profile', profile_path(current_user), class: 'btn btn-primary' %>
 
   <h1><%= @trip.name %></h1>
-  <h3>From <%= @trip.start_date %> to <%= @trip.end_date %></h3>
+  <h3>From <%= @trip.start_date.strftime("%B %-d, %Y") %> to <%= @trip.end_date.strftime("%B %-d, %Y") %></h3>
 
-  <% @trip.activities.each do |acc| %>
-    <ul>
-      <li><%= acc.place_name %></li>
-    </ul>
-  <% end %>
-
-  <%= render 'transportations/create_transportation', trip: @trip, transportation: @transportation %>
-  <%= render 'accomodations/create_accomodation', trip: @trip, accomodation: @accomodation %>
-  <%= render 'activities/create_activity', trip: @trip, activity: @activity %>
 </div>
-<br>
-<div class="container">
 
-<%= month_calendar(events: @transportation_date + @accomodation_date + @activity_date, attribute: :start_date, end_attribute: :end_date) do |date, events| %>
-  <%= date %>
-  <% events.each do |event| %>
-    <div>
-      <% if event.is_a? Transportation %>
-        <%= event.name %>
-      <% elsif event.is_a? Accomodation %>
-        <%= event.place_name %>
-      <% elsif event.is_a? Activity %>
-        <%= event.place_name %>
+<br>
+
+<div class="container">
+  <ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item" role="calendar">
+      <button class="nav-link active" id="calendar-tab" data-bs-toggle="tab" data-bs-target="#calendar" type="button" role="tab" aria-controls="calendar" aria-selected="true">Calendar</button>
+    </li>
+    <li class="nav-item" role="map">
+      <button class="nav-link" id="map-tab" data-bs-toggle="tab" data-bs-target="#map" type="button" role="tab" aria-controls="map" aria-selected="false">Map</button>
+    </li>
+  </ul>
+
+  <div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active" id="calendar" role="tabpanel" aria-labelledby="calendar-tab">
+      <br>
+      <%= render 'transportations/create_transportation', trip: @trip, transportation: @transportation %>
+      <%= render 'accomodations/create_accomodation', trip: @trip, accomodation: @accomodation %>
+      <%= render 'activities/create_activity', trip: @trip, activity: @activity %>
+      <br>
+      <br>
+      <%= month_calendar(events: @transportation_date + @accomodation_date + @activity_date, attribute: :start_date, end_attribute: :end_date) do |date, events| %>
+        <%= date %>
+        <% events.each do |event| %>
+          <div>
+            <%= render 'shared/modal_calendar', class_model: Transportation, event: event %>
+            <%= render 'shared/modal_calendar', class_model: Accomodation, event: event %>
+            <%= render 'shared/modal_calendar', class_model: Activity, event: event %>
+          </div>
+        <% end %>
       <% end %>
     </div>
-  <% end %>
-<% end %>
-
+    <div class="tab-pane fade" id="map" role="tabpanel" aria-labelledby="map-tab">...</div>
+  </div>
 </div>
+
+<br>
